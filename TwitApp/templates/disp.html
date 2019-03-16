@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>{{ title }}</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->
+	<link rel="icon" type="image/png" href="{{ url_for( 'static', filename='images/favicon.ico') }}"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{ url_for( 'static', filename='css/bootstrap.min.css') }}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{ url_for( 'static', filename='css/font-awesome.min.css') }}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{ url_for( 'static', filename='css/animate.css') }}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{ url_for( 'static', filename='css/hamburgers.min.css') }}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{ url_for( 'static', filename='css/select2.min.css') }}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{ url_for( 'static', filename='css/util.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for( 'static', filename='css/main.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for( 'static', filename='css/jquery.dataTables.min.css') }}">
+	
+	
+<!--===============================================================================================-->
+</head>
+<body>
+
+	<div class="bg-contact2" style="background-image: url('{{ url_for( 'static', filename='images/bg-01.jpg') }}');">
+		<div class="container-contact2">
+			<div class="container1">
+					<div class="wrap-contact2 wrap-display">
+							<span class="contact2-form-title">
+								{{ title }}
+							</span>
+							<br>
+							<div class="container-contact2-form-btn">
+								<div class="wrap-contact2-form-btn">
+									<div class="contact2-form-bgbtn"></div>
+									<a href="{{ url_for('tweet.analysis', key=search_key, limit=limit) }}" class="contact2-form-btn" role="button">Analyze</a>
+								</div>
+							</div>
+							<br>
+							<div align="center">
+								<h3>Search results for search key : <i>{{ search_key }}</i></h3>
+								<br>
+								<table id="myTable">
+									<thead>
+										<tr>
+											<th>#</th>
+											<th>ID</th>
+											<th>Tweets</th>
+											<th>Length</th>
+											<th>Date</th>
+											<th>Source</th>
+											<th>Retweets</th>
+											<th>Likes</th>
+											<th>Sentiment</th>
+										</tr>
+									</thead>
+									<tbody>
+										{% for tweet in render_list %}
+										<tr>
+											<td>{{ tweet.index }}</td>
+											<td>{{ tweet.id }}</td>
+											<td>{{ tweet.tweet }}</td>
+											<td class="text-center">{{ tweet.len }}</td>
+											<td>{{ tweet.date }}</td>
+											<td>{{ tweet.source }}</td>
+											<td class="text-center">{{ tweet.likes }}</td>
+											<td class="text-center">{{ tweet.retweets }}</td>
+											<td>{{ tweet.sentiment }}</td>
+										</tr>
+										{% endfor %}
+									</tbody>	
+								</table>
+							</div>	
+						</div>
+			</div>
+			
+		</div>
+	</div>
+
+	<style>
+	#myTable tr.odd {
+    background: rgba(51, 153, 255, 0.8) !important;
+    color: #fff;
+}
+#myTable td
+{
+	font-size: 14px !important; 
+
+
+}
+.wrap-display {
+    width: calc(100% - 200px);
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    padding: 72px 55px 90px 55px;
+    margin: 0 auto;
+}
+	</style>
+
+
+<!--===============================================================================================-->
+	<script src="{{ url_for( 'static', filename='js/jquery-3.2.1.min.js') }}"></script>
+<!--===============================================================================================-->
+	<script src="{{ url_for( 'static', filename='js/popper.js') }}"></script>
+	<script src="{{ url_for( 'static', filename='js/bootstrap.min.js') }}"></script>
+<!--===============================================================================================-->
+	<script src="{{ url_for( 'static', filename='js/select2.min.js') }}"></script>
+<!--===============================================================================================-->
+	<script src="{{ url_for( 'static', filename='js/main.js') }}"></script>
+	<script src="{{ url_for( 'static', filename='js/jquery.dataTables.min.js') }}"></script>
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	
+	<script>
+	  
+	  $(document).ready( function () {
+    $('#myTable').DataTable();
+} );
+	</script>
+
+</body>
+</html>

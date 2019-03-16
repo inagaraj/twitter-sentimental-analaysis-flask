@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>{{ title }}</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->
+	<link rel="icon" type="image/png" href="{{ url_for( 'static', filename='images/favicon.ico') }}"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{ url_for( 'static', filename='css/bootstrap.min.css') }}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{ url_for( 'static', filename='css/font-awesome.min.css') }}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{ url_for( 'static', filename='css/animate.css') }}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{ url_for( 'static', filename='css/hamburgers.min.css') }}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{ url_for( 'static', filename='css/select2.min.css') }}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{ url_for( 'static', filename='css/util.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for( 'static', filename='css/main.css') }}">
+<!--===============================================================================================-->
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js'></script>
+	<script src="{{ url_for( 'static', filename='js/Chart.bundle.js') }}"></script>
+	<script src="{{ url_for( 'static', filename='js/utils.js') }}"></script>
+</head>
+<body>
+
+	<div class="bg-contact2" style="background-image: url('{{ url_for( 'static', filename='images/bg-01.jpg') }}');">
+		<div class="container-contact2">
+			<div class="wrap-contact2">
+				<span class="contact2-form-title">
+					{{ title }}
+				</span>
+				<br>
+				<div align="center">
+					<h3>Tweet Analysis for key : <i>{{ search_key }}</i></h3>
+					<h4>Percentage of Postive Tweets: <span class="text-right pos">{{ pos }}%</span></h4>
+					<h4>Percentage of Neutral Tweets: <span class="text-right neu">{{ neu }}%</span></h4>
+					<h4>Percentage of Negative tweets: <span class="text-right neg">{{ neg }}%</span></h4>
+					<br>				
+					<canvas id="chart-area" width="600" height="400"></canvas>
+					<br>
+					<br>
+					<h4>Want to try analysis on different search key ?</h4>
+					<div class="container-contact2-form-btn">
+						<div class="wrap-contact2-form-btn">
+							<div class="contact2-form-bgbtn"></div>
+							<a href="{{ url_for('tweet.my_form') }}" class="contact2-form-btn" role="button">Yes</a>
+						</div>
+					</div>
+					<script>
+						var config = {
+							type: 'pie',
+							data: {
+								datasets: [{
+									data: {{ [pos, neu, neg] }},
+									backgroundColor: [
+										"#00FF00",
+										"#1DA1F2",
+										"#FF0000"
+									],
+									label: 'Sentimental Data'
+								}],
+								labels: [
+									'Positive',
+									'Neutral',
+									'Negative'
+								]
+							},
+							options: {
+								responsive: true
+							}
+						};
+
+						window.onload = function() {
+							var ctx = document.getElementById('chart-area').getContext('2d');
+							window.myPie = new Chart(ctx, config);
+						};
+
+					</script>
+				</div>	
+			</div>
+		</div>
+	</div>
+	
+<style>
+	h3
+	{
+		margin-bottom: 10px;
+	}
+	h4
+	{
+		margin-bottom: 10px;
+	}
+	.pos
+	{
+		color: #00FF00;
+	}
+	.neu
+	{
+		color: #1DA1F2;
+	}
+	.neg
+	{
+		color: #FF0000;
+	}
+</style>
+
+
+<!--===============================================================================================-->
+	<script src="{{ url_for( 'static', filename='js/jquery-3.2.1.min.js') }}"></script>
+<!--===============================================================================================-->
+	<script src="{{ url_for( 'static', filename='js/popper.js') }}"></script>
+	<script src="{{ url_for( 'static', filename='js/bootstrap.min.js') }}"></script>
+<!--===============================================================================================-->
+	<script src="{{ url_for( 'static', filename='js/select2.min.js') }}"></script>
+<!--===============================================================================================-->
+	<script src="{{ url_for( 'static', filename='js/main.js') }}"></script>
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+
+	  gtag('config', 'UA-23581568-13');
+	</script>
+
+</body>
+</html>
