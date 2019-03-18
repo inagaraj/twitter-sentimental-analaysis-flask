@@ -1,4 +1,4 @@
-# Flask-Twitter-Sentiment-Analyzer
+# Flask-Twitter-Sentiment-Analysis
 
 A small uWSGI application built in python to search and analyze tweet sentiment based on the given input search key and tweet count.
 
