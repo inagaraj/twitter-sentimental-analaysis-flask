@@ -33,14 +33,23 @@
 							<span class="contact2-form-title">
 								{{ title }}
 							</span>
-							<br>
-							<div class="container-contact2-form-btn">
-								<div class="wrap-contact2-form-btn">
-									<div class="contact2-form-bgbtn"></div>
-									<a href="{{ url_for('tweet.analysis', key=search_key, limit=limit) }}" class="contact2-form-btn" role="button">Analyze</a>
-								</div>
+						
+							<div class="main-div">
+									<div class="container-contact2-form-btn left-section">
+											<div class="wrap-contact2-form-btn">
+												<div class="contact2-form-bgbtn"></div>
+												<a href="{{ url_for('tweet.analysis', key=search_key, limit=limit) }}" class="contact2-form-btn" role="button">Analyze</a>
+											</div>
+										</div>
+										
+										<div class="container-contact2-form-btn">
+												<div class="wrap-contact2-form-btn">
+													<div class="contact2-form-bgbtn"></div>
+													<a href="{{ url_for( 'static', filename='twitter-sentimental-analysis.csv', key=search_key) }}" class="contact2-form-btn" role="button">Export</a>
+												</div>
+											</div>
 							</div>
-							<br>
+							
 							<div align="center">
 								<h3>Search results for search key : <i>{{ search_key }}</i></h3>
 								<br>
@@ -60,17 +69,22 @@
 									</thead>
 									<tbody>
 										{% for tweet in render_list %}
-										<tr>
-											<td>{{ tweet.index }}</td>
-											<td>{{ tweet.id }}</td>
-											<td>{{ tweet.tweet }}</td>
-											<td class="text-center">{{ tweet.len }}</td>
-											<td>{{ tweet.date }}</td>
-											<td>{{ tweet.source }}</td>
-											<td class="text-center">{{ tweet.likes }}</td>
-											<td class="text-center">{{ tweet.retweets }}</td>
-											<td>{{ tweet.sentiment }}</td>
+										</a>
+										 <tr>
+											
+												<td>{{ tweet.index+1 }}</td>
+												<td>{{ tweet.id }}</td>
+												<td><a target="_blank" href="https://twitter.com/i/web/status/{{ tweet.id }}" >{{ tweet.tweet }} </a></td>
+												<td class="text-center">{{ tweet.len }}</td>
+												<td>{{ tweet.date }}</td>
+												<td>{{ tweet.source }}</td>
+												<td class="text-center">{{ tweet.likes }}</td>
+												<td class="text-center">{{ tweet.retweets }}</td>
+												<td>{{ tweet.sentiment }}</td>
+											
 										</tr>
+										
+
 										{% endfor %}
 									</tbody>	
 								</table>
@@ -100,6 +114,26 @@
     padding: 72px 55px 90px 55px;
     margin: 0 auto;
 }
+tr.odd td a{
+	color:#fff;
+}
+tr.even td a{
+	color:#666;
+}
+.main-div
+{
+	width: 500px;
+    margin: 0 auto;
+    display: flex;
+	padding-bottom: 30px;
+}
+.left-section
+{
+	float:left;
+	margin-right: 10px;
+}
+
+
 	</style>
 
 

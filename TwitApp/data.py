@@ -31,7 +31,7 @@ class TwitterMain:
 
     def get_tweet_html(self, id):
         oembed = self.api.get_oembed(id=id, hide_media=True, hide_thread=True)
-        return oembed['html'].strip('\n')
+        return oembed["url"]
 
     def get_trends(self, text_query, count):
         tt_buff = list()
@@ -56,12 +56,22 @@ class TwitterMain:
         keyword=text_query
         limit=count
         tweets = api.search(q=keyword, count=limit)
+
+       
+        #-----------------------------------------------------------------------
+        # print out the contents, and any URLs found inside
+        #-----------------------------------------------------------------------
+       
+        
         
         df = tweet_analyser.tweets_to_data_frame(tweets)
         
         df['sentiment'] = np.array([tweet_analyser.analyze_sentiment(tweet) for tweet in df['tweet']])
+        
+       
         print(df)
-        df.to_csv('twitter-sentimental-analysis.csv', encoding='utf-8', index=False) 
+        df.to_csv('twitter-sentimental-analysis.csv', encoding='utf-8', index=False)
+        df.to_csv('./TwitApp/static/twitter-sentimental-analysis.csv', encoding='utf-8', index=False) 
         df = df.to_records()
         return df
     @classmethod
@@ -153,7 +163,13 @@ class TwitterListener(StreamListener):
 # # # Tweet Analyser # # #
 
 class TweetAnalyzer():
+    def __init__(self):
+        self.api = twit_auth_handler()
 
+    def get_tweet_html(self,id):
+        oembed = self.api.get_oembed(id=1107609036189360129, hide_media=True, hide_thread=True)
+        return oembed["url"] 
+        
     def clean_tweet(self, tweet):
         return ' '.join(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)", " ", tweet).split())
 
@@ -169,11 +185,12 @@ class TweetAnalyzer():
 
     def tweets_to_data_frame(self, tweets):
         df = pd.DataFrame(data=[tweet.text for tweet in tweets], columns=['tweet'])
-        df['id'] = np.array([str(tweet.id_str) for tweet in tweets])
+        df['id'] = np.array([tweet.id_str for tweet in tweets])
         df['len'] = np.array([len(tweet.text) for tweet in tweets])
         df['date'] = np.array([tweet.created_at for tweet in tweets])
         df['source'] = np.array([tweet.source for tweet in tweets])
         df['likes'] = np.array([tweet.favorite_count for tweet in tweets])
         df['retweets'] = np.array([tweet.retweet_count for tweet in tweets])
         
+       
         return df
